@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using SignalR.HubServer.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,12 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddSignalR();
+// El enum viaja como texto ("Enviado") y no como número (2)
+builder.Services.AddSignalR()
+    .AddJsonProtocol(options =>
+    {
+        options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 var app = builder.Build();
 
@@ -23,5 +29,6 @@ app.UseRouting();
 app.UseCors("ClientPolicy");
 
 app.MapHub<ChatHub>("/chatHub");
+app.MapHub<OrderHub>("/orderHub");
 
 app.Run();
