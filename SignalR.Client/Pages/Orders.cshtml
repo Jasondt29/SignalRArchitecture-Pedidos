@@ -1,0 +1,31 @@
+@page
+@{
+    ViewData["Title"] = "Pedidos en vivo";
+}
+
+<h1>Pedidos en vivo</h1>
+
+<div>
+    <label for="orderId">Número de pedido</label>
+    <input id="orderId" type="number" min="1" value="1" />
+    <button id="followButton" disabled>Seguir pedido</button>
+</div>
+
+<h2>Estado actual: <span id="currentStatus">-</span></h2>
+
+<ol id="steps">
+    <li data-status="Pendiente">Pendiente</li>
+    <li data-status="EnPreparacion">En preparación</li>
+    <li data-status="Enviado">Enviado</li>
+    <li data-status="Entregado">Entregado</li>
+</ol>
+
+<button id="advanceButton" disabled>Avanzar estado</button>
+
+<p id="status">Conectando...</p>
+
+<h3>Historial</h3>
+<ul id="history"></ul>
+
+<script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/orders.js"></script>
